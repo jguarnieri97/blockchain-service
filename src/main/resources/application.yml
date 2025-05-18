@@ -8,9 +8,6 @@ spring:
 server:
     port: 8081
 
-contracts:
-    host: http://localhost:8086/contracts/v1/
-
 google:
     cloud:
         web3:

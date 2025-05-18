@@ -6,17 +6,25 @@ import org.springframework.scheduling.annotation.Async;
 
 public interface GoogleWeb3Service {
 
-    public String publishHashToBlockchain(String fromPrivateKey, String hashHex) throws Exception;
+    /**
+     * Publica un hash en la blockchain.
+     *
+     * @param fromPrivateKey Clave privada del remitente.
+     * @param hashHex Hash en formato hexadecimal a publicar.
+     * @return Hash de la transacción en la blockchain.
+     * @throws Exception Si ocurre un error durante la publicación.
+     */
+    String publishHashToBlockchain(String fromPrivateKey, String hashHex) throws Exception;
 
     /**
-     * Funcion asyncrona que obtiene el metadata de la transaccion
-     * esto es debido a que el bloque puede tardar en ser generado
-     * por lo que se debe esperar a que se genere el bloque
-     * y luego obtener el metadata de la transaccion
+     * Obtiene los metadatos de una transacción en la blockchain.
+     *
+     * @param txHash Hash de la transacción.
+     * @return Metadatos de la transacción como un mapa.
+     * @throws Exception Si ocurre un error al obtener los metadatos.
      */
-    @Async
-    public CompletableFuture<Map<String, Object>> getTxMetadata(String txHash) throws Exception;
+    CompletableFuture<Map<String, Object>> getTxMetadata(String txHash) throws Exception;
 
-    public String retrieveTheHashByHisTransaction(String txHash); 
+    String getHashFromTransaction(String txHash);
     
 }
