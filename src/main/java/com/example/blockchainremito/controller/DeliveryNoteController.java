@@ -1,33 +1,36 @@
 package com.example.blockchainremito.controller;
 
-import com.example.blockchainremito.dto.DeliveryNoteDto;
-import com.example.blockchainremito.dto.GenericResponse;
+import com.example.blockchainremito.dto.request.DeliveryNoteVerifyRequestDto;
+import com.example.blockchainremito.dto.response.BlockchainCertResponseDTO;
+import com.example.blockchainremito.dto.request.DeliveryNoteCertifyRequestDto;
+import com.example.blockchainremito.dto.response.GenericResponseDto;
+import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
-/**
- * Controlador para las operaciones relacionadas con Contratos
- */
-@RequestMapping("/contracts/v1/accounts/")
+@RequestMapping("blockchain/v1/delivery-note")
+@Validated
 public interface DeliveryNoteController {
 
-    /**
-     * Recurso para obtener una lista de todos los remitos
-     * según su id
-     *
-     * @param deliveryNoteId: id del remito
-     * @return deliveryNote
-     */
-    @GetMapping()
+    @PostMapping
     @ResponseStatus(HttpStatus.OK)
-    GenericResponse<DeliveryNoteDto> getDeliveryNoteById(@RequestParam(required = false) Long deliveryNoteId);
+    @Operation(summary = "Certify a delivery note")
+    GenericResponseDto<BlockchainCertResponseDTO> certifyDeliveryNote(
+            @Valid @RequestBody DeliveryNoteCertifyRequestDto request);
 
-    @GetMapping("/download/{id}")
+    @PostMapping("/verify")
     @ResponseStatus(HttpStatus.OK)
-    ResponseEntity<byte[]> downloadDeliveryNote(@PathVariable Long id);
+    @Operation(summary = "Verify a delivery note")
+    GenericResponseDto<Object> verifyDeliveryNote(
+            @Valid @RequestBody DeliveryNoteVerifyRequestDto request);
+
+//    @GetMapping()
+//    @ResponseStatus(HttpStatus.OK)
+//    GenericResponse<DeliveryNoteDto> getDeliveryNoteById(@RequestParam(required = false) Long deliveryNoteId);
+//
+//    @GetMapping("/download/{id}")
+//    @ResponseStatus(HttpStatus.OK)
+//    ResponseEntity<byte[]> downloadDeliveryNote(@PathVariable Long id);
 }
