@@ -1,7 +1,6 @@
 package ar.edu.unlam.tpi.blockchain.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.web3j.crypto.Credentials;
 import org.web3j.crypto.RawTransaction;

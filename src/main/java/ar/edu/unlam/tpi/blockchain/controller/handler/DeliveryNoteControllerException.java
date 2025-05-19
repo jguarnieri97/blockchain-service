@@ -2,7 +2,6 @@ package ar.edu.unlam.tpi.blockchain.controller.handler;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.web3j.crypto.Hash;
 import org.springframework.http.ResponseEntity;
 
 import ar.edu.unlam.tpi.blockchain.exceptions.HashInvalidException;
