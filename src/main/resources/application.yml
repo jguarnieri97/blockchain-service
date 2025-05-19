@@ -2,9 +2,7 @@
 spring:
     aplication:
         name: blockchain-api
-    profiles:
-        active: local
-    
+        
 server:
     port: 8081
 
