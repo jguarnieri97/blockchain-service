@@ -1,20 +1,38 @@
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+Proyecto: Firma y Verificación de Remitos con Blockchain (POC)
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+Descripción general:
+Este proyecto es una Prueba de Concepto (POC) de una aplicación web construida con Spring Boot que permite a las empresas gestionar remitos digitales con un nivel adicional de seguridad e integridad basado en tecnología blockchain.
+El objetivo es simular cómo se podría aplicar blockchain para garantizar que los documentos no sean modificados, almacenando un hash único generado desde los datos del remito.
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+Tecnologías utilizadas:
+Java 17
+Spring Boot
+H2 Database
+Lombok
+Swagger/OpenAPI para pruebas
+Hashing SHA-256 local
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+¿Qué funcionalidades implementa?
+Crear remitos digitales a través de una API REST.
+Calcular un hash SHA-256 a partir de los campos críticos del remito.
+Guardar el hash junto al remito en base de datos.
+Verificar la integridad de un remito: el sistema recalcula el hash y lo compara con el original.
+Listar todos los remitos registrados.
+
+¿Dónde entra Blockchain?
+Actualmente el hash se calcula y se guarda localmente (POC), pero:
+Esta arquitectura permite que en una versión real se publique el hash en una blockchain pública o privada.
+De esta forma se obtiene un respaldo inmutable y auditable, ideal para uso en seguridad e higiene, logística, mantenimiento, etc.
+
+Endpoints disponibles:
+POST /remitos → Crear un nuevo remito.
+GET /remitos → Listar todos los remitos.
+GET /remitos/{id}/verificar → Verificar integridad por ID.
+
+¿Cómo se ejecuta?
+Cloná el proyecto.
+Ejecutá la clase principal Application.java.
+
+Accedé a Swagger UI en:
+http://localhost:8080/swagger-ui.html
