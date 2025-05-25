@@ -13,7 +13,7 @@ public class GoogleWeb3JConfig {
     @Value("${google.cloud.web3.uri}")
     private String gcpRpcUrl;
 
-    @Value("${private.key}")
+    @Value("${google.private.key}")
     private String privateKey;
 
     @Bean
@@ -21,7 +21,7 @@ public class GoogleWeb3JConfig {
         return Web3j.build(new HttpService(gcpRpcUrl));
     }
 
-    @Bean(name = "privateKey")
+    @Bean
     public String privateKey(){
         return privateKey;
     }
