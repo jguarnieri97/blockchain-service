@@ -11,10 +11,12 @@ import ar.edu.unlam.tpi.blockchain.dto.response.BlockchainCertResponseDTO;
 import ar.edu.unlam.tpi.blockchain.dto.response.GenericResponseDto;
 import ar.edu.unlam.tpi.blockchain.dto.response.MessageResponseDto;
 import ar.edu.unlam.tpi.blockchain.service.DeliveryNoteService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequiredArgsConstructor
 @Slf4j
+@Tag(name = "Delivery Note", description = "Controller relacionadas a remitos")
 public class DeliveryNoteControllerImpl implements DeliveryNoteController {
 
     private final DeliveryNoteService deliveryNoteService;

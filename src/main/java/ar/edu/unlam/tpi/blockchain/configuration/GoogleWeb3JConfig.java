@@ -1,4 +1,4 @@
-package ar.edu.unlam.tpi.blockchain.config;
+package ar.edu.unlam.tpi.blockchain.configuration;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
