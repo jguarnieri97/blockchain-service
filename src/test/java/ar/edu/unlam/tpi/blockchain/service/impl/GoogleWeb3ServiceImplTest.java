@@ -1,4 +1,4 @@
-package ar.edu.unlam.tpi.blockchain.service;
+package ar.edu.unlam.tpi.blockchain.service.impl;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -21,7 +21,9 @@ import org.web3j.crypto.RawTransaction;
 import org.web3j.protocol.core.methods.response.EthBlock.Block;
 import org.web3j.protocol.core.methods.response.Transaction;
 
-import ar.edu.unlam.tpi.blockchain.service.impl.GoogleWeb3ServiceImpl;
+import ar.edu.unlam.tpi.blockchain.service.BlockchainTransactionService;
+
+import static ar.edu.unlam.tpi.blockchain.utils.ConstantsHelper.*;
 
 @ExtendWith(MockitoExtension.class)
 public class GoogleWeb3ServiceImplTest {
@@ -32,26 +34,21 @@ public class GoogleWeb3ServiceImplTest {
     @InjectMocks
     private GoogleWeb3ServiceImpl googleWeb3Service;
 
-    private static final String TEST_PRIVATE_KEY = "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef";
-    private static final String TEST_HASH = "ABC123DEF456";
-    private static final String TEST_TX_HASH = "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef";
-    private static final Long TEST_CHAIN_ID = 11155111L;
-
     @Test
     @DisplayName("Should successfully publish hash to blockchain")
     void givenValidPrivateKeyAndHash_whenPublishHashToBlockchain_thenReturnsTxHash() throws Exception {
         RawTransaction mockTransaction = mock(RawTransaction.class);
-        String expectedTxHash = "0x" + TEST_TX_HASH;
+        String expectedTxHash = "0x" + TX_HASH;
 
-        when(transactionService.buildTransaction(any(Credentials.class), eq(TEST_HASH)))
+        when(transactionService.buildTransaction(any(Credentials.class), eq(HASH)))
             .thenReturn(mockTransaction);
         when(transactionService.sendTransaction(any(Credentials.class), eq(TEST_CHAIN_ID), eq(mockTransaction)))
             .thenReturn(expectedTxHash);
 
-        String result = googleWeb3Service.publishHashToBlockchain(TEST_PRIVATE_KEY, TEST_HASH);
+        String result = googleWeb3Service.publishHashToBlockchain(TEST_PRIVATE_KEY, HASH);
 
         assertEquals(expectedTxHash, result);
-        verify(transactionService).buildTransaction(any(Credentials.class), eq(TEST_HASH));
+        verify(transactionService).buildTransaction(any(Credentials.class), eq(HASH));
         verify(transactionService).sendTransaction(any(Credentials.class), eq(TEST_CHAIN_ID), eq(mockTransaction));
     }
 
@@ -62,7 +59,7 @@ public class GoogleWeb3ServiceImplTest {
             .thenThrow(new RuntimeException("Service error"));
 
         assertThrows(RuntimeException.class,
-            () -> googleWeb3Service.publishHashToBlockchain(TEST_PRIVATE_KEY, TEST_HASH));
+            () -> googleWeb3Service.publishHashToBlockchain(TEST_PRIVATE_KEY, HASH));
     }
 
     @Test
@@ -73,18 +70,18 @@ public class GoogleWeb3ServiceImplTest {
         BigInteger blockNumber = BigInteger.valueOf(12345);
         BigInteger timestamp = BigInteger.valueOf(Instant.now().getEpochSecond());
 
-        when(transactionService.getTransaction(TEST_TX_HASH))
+        when(transactionService.getTransaction(TX_HASH))
             .thenReturn(Optional.of(mockTx));
         when(transactionService.getBlockByTransaction(mockTx))
             .thenReturn(Optional.of(mockBlock));
         when(mockBlock.getNumber()).thenReturn(blockNumber);
         when(mockBlock.getTimestamp()).thenReturn(timestamp);
 
-        CompletableFuture<Map<String, Object>> future = googleWeb3Service.getTxMetadata(TEST_TX_HASH);
+        CompletableFuture<Map<String, Object>> future = googleWeb3Service.getTxMetadata(TX_HASH);
         Map<String, Object> result = future.get();
 
         assertNotNull(result);
-        assertEquals(TEST_TX_HASH, result.get("txHash"));
+        assertEquals(TX_HASH, result.get("txHash"));
         assertEquals(blockNumber, result.get("blockNumber"));
         assertEquals(Instant.ofEpochSecond(timestamp.longValue()), result.get("timestamp"));
     }
@@ -92,62 +89,62 @@ public class GoogleWeb3ServiceImplTest {
     @Test
     @DisplayName("Should throw exception when transaction not found")
     void givenMissingTransaction_whenGetTxMetadata_thenThrowsException() throws Exception {
-        when(transactionService.getTransaction(TEST_TX_HASH))
+        when(transactionService.getTransaction(TX_HASH))
             .thenReturn(Optional.empty());
 
         assertThrows(RuntimeException.class,
-            () -> googleWeb3Service.getTxMetadata(TEST_TX_HASH));
+            () -> googleWeb3Service.getTxMetadata(TX_HASH));
     }
 
     @Test
     @DisplayName("Should successfully get hash from transaction")
     void givenTransactionWithInputHash_whenGetHashFromTransaction_thenReturnsHashWithoutPrefix() throws Exception {
         Transaction mockTx = mock(Transaction.class);
-        String inputHash = "0x" + TEST_HASH;
+        String inputHash = HASH;
 
-        when(transactionService.getTransaction(TEST_TX_HASH))
+        when(transactionService.getTransaction(TX_HASH))
             .thenReturn(Optional.of(mockTx));
         when(mockTx.getInput()).thenReturn(inputHash);
 
-        String result = googleWeb3Service.getHashFromTransaction(TEST_TX_HASH);
+        String result = googleWeb3Service.getHashFromTransaction(TX_HASH);
 
-        assertEquals(TEST_HASH, result);
+        assertEquals(HASH.substring(2).toUpperCase(), result);
     }
 
     @Test
     @DisplayName("Should handle hash without 0x prefix")
     void givenTransactionWithRawHash_whenGetHashFromTransaction_thenReturnsHashAsIs() throws Exception {
         Transaction mockTx = mock(Transaction.class);
-        String inputHash = TEST_HASH;
+        String inputHash = HASH.substring(2);
 
-        when(transactionService.getTransaction(TEST_TX_HASH))
+        when(transactionService.getTransaction(TX_HASH))
             .thenReturn(Optional.of(mockTx));
         when(mockTx.getInput()).thenReturn(inputHash);
 
-        String result = googleWeb3Service.getHashFromTransaction(TEST_TX_HASH);
+        String result = googleWeb3Service.getHashFromTransaction(TX_HASH);
 
-        assertEquals(TEST_HASH, result);
+        assertEquals(HASH.substring(2).toUpperCase(), result);
     }
 
     @Test
     @DisplayName("Should throw exception when transaction not found in getHashFromTransaction")
     void givenMissingTransaction_whenGetHashFromTransaction_thenThrowsException() throws Exception {
-        when(transactionService.getTransaction(TEST_TX_HASH))
+        when(transactionService.getTransaction(TX_HASH))
             .thenReturn(Optional.empty());
 
         RuntimeException exception = assertThrows(RuntimeException.class,
-            () -> googleWeb3Service.getHashFromTransaction(TEST_TX_HASH));
+            () -> googleWeb3Service.getHashFromTransaction(TX_HASH));
         assertEquals("Error al obtener el hash de la transacción", exception.getMessage());
     }
 
     @Test
     @DisplayName("Should throw exception when transaction service fails in getHashFromTransaction")
     void givenServiceFailure_whenGetHashFromTransaction_thenThrowsException() throws Exception {
-        when(transactionService.getTransaction(TEST_TX_HASH))
+        when(transactionService.getTransaction(TX_HASH))
             .thenThrow(new RuntimeException("Service error"));
 
         RuntimeException exception = assertThrows(RuntimeException.class,
-            () -> googleWeb3Service.getHashFromTransaction(TEST_TX_HASH));
+            () -> googleWeb3Service.getHashFromTransaction(TX_HASH));
         assertEquals("Error al obtener el hash de la transacción", exception.getMessage());
     }
 }

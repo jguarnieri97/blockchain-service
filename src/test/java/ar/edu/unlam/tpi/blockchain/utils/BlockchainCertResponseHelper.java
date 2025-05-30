@@ -1,4 +1,4 @@
-package ar.edu.unlam.tpi.blockchain.helper;
+package ar.edu.unlam.tpi.blockchain.utils;
 
 import ar.edu.unlam.tpi.blockchain.dto.response.BlockchainCertResponseDTO;
 import lombok.experimental.UtilityClass;

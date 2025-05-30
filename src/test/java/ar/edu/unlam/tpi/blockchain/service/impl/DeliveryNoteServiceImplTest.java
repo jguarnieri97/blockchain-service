@@ -1,4 +1,4 @@
-package ar.edu.unlam.tpi.blockchain.service;
+package ar.edu.unlam.tpi.blockchain.service.impl;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -22,12 +22,16 @@ import ar.edu.unlam.tpi.blockchain.dto.response.BlockchainCertResponseDTO;
 import ar.edu.unlam.tpi.blockchain.dto.response.MessageResponseDto;
 import ar.edu.unlam.tpi.blockchain.exceptions.HashInvalidException;
 import ar.edu.unlam.tpi.blockchain.exceptions.InternalException;
-import ar.edu.unlam.tpi.blockchain.service.impl.DeliveryNoteServiceImpl;
-import ar.edu.unlam.tpi.blockchain.helper.BlockchainCertResponseHelper;
-import ar.edu.unlam.tpi.blockchain.helper.DeliveryNoteHelper;
+import ar.edu.unlam.tpi.blockchain.service.BlockchainTransactionService;
+import ar.edu.unlam.tpi.blockchain.service.GoogleWeb3Service;
+import ar.edu.unlam.tpi.blockchain.service.HashService;
+import ar.edu.unlam.tpi.blockchain.utils.BlockchainCertResponseHelper;
+import ar.edu.unlam.tpi.blockchain.utils.DeliveryNoteHelper;
+
+import static ar.edu.unlam.tpi.blockchain.utils.ConstantsHelper.*;
 
 @ExtendWith(MockitoExtension.class)
-class DeliveryNoteServiceTest {
+public class DeliveryNoteServiceImplTest {
 
     @Mock
     private GoogleWeb3Service googleWeb3Service;
@@ -40,11 +44,6 @@ class DeliveryNoteServiceTest {
 
     @InjectMocks
     private DeliveryNoteServiceImpl deliveryNoteService;
-
-    private static final String TEST_PRIVATE_KEY = "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef";
-    private static final String BODY_FILE = "0x4D7953514C4C6F6E67426C6F624578616D706C6544617461417348657844617461323032342D30352D31385465737444617461426C6F62";
-    private static final String HASH = "0x0890ec6ada2de6a8473195faae8e822e60610220d344ab970d4e816fdea52ff7";
-    private static final String TX_HASH = "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef";
 
 
     @BeforeEach

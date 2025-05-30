@@ -1,4 +1,4 @@
-package ar.edu.unlam.tpi.blockchain.service;
+package ar.edu.unlam.tpi.blockchain.service.impl;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,7 +10,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import ar.edu.unlam.tpi.blockchain.dto.response.MessageResponseDto;
 import ar.edu.unlam.tpi.blockchain.exceptions.HashInvalidException;
-import ar.edu.unlam.tpi.blockchain.service.impl.HashServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
 class HashServiceImplTest {
