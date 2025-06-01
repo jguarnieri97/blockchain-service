@@ -1,4 +1,4 @@
-package ar.edu.unlam.tpi.blockchain.config;
+package ar.edu.unlam.tpi.blockchain.configuration;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +13,7 @@ public class GoogleWeb3JConfig {
     @Value("${google.cloud.web3.uri}")
     private String gcpRpcUrl;
 
-    @Value("${private.key}")
+    @Value("${google.private.key}")
     private String privateKey;
 
     @Bean
@@ -21,7 +21,7 @@ public class GoogleWeb3JConfig {
         return Web3j.build(new HttpService(gcpRpcUrl));
     }
 
-    @Bean(name = "privateKey")
+    @Bean
     public String privateKey(){
         return privateKey;
     }
