@@ -9,7 +9,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.concurrent.CompletableFuture;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -64,7 +63,6 @@ public class DeliveryNoteControllerImplTest {
     }
 
     @Test
-    @DisplayName("Given valid delivery note data When certifying via POST /blockchain/v1/delivery-note Then should return success response")
     void givenValidDeliveryNoteData_whenCertifying_thenShouldReturnSuccessResponse() throws Exception {
         // Given
         when(deliveryNoteService.certifyDeliveryNote(any(DeliveryNoteCertifyRequestDto.class)))
@@ -83,7 +81,6 @@ public class DeliveryNoteControllerImplTest {
     }
 
     @Test
-    @DisplayName("Given valid delivery note data When verifying via POST /blockchain/v1/delivery-note/verify Then should return success response")
     void givenValidDeliveryNoteData_whenVerifying_thenShouldReturnSuccessResponse() throws Exception {
         // Given
         when(deliveryNoteService.verifyDeliveryNote(any(DeliveryNoteVerifyRequestDto.class)))
@@ -100,7 +97,6 @@ public class DeliveryNoteControllerImplTest {
     }
 
     @Test
-    @DisplayName("Given invalid request body When certifying Then should return bad request")
     void givenInvalidRequestBody_whenCertifying_thenShouldReturnBadRequest() throws Exception {
         // Given
         String invalidJson = "{ invalid json }";
@@ -113,7 +109,6 @@ public class DeliveryNoteControllerImplTest {
     }
 
     @Test
-    @DisplayName("Given invalid request body When verifying Then should return bad request")
     void givenInvalidRequestBody_whenVerifying_thenShouldReturnBadRequest() throws Exception {
         // Given
         String invalidJson = "{ invalid json }";

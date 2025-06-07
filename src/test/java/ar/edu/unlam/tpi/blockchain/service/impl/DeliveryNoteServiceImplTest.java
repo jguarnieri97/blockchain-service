@@ -8,7 +8,6 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -57,7 +56,6 @@ public class DeliveryNoteServiceImplTest {
     }
 
     @Test
-    @DisplayName("Should successfully certify delivery note")
     void givenDeliveryNote_whenCertifyDeliveryNote_thenReturnsBlockchainCertResponse() throws Exception {
         // Arrange
         DeliveryNoteCertifyRequestDto note = DeliveryNoteHelper.createDeliveryNoteCertifyRequestDto(BODY_FILE);
@@ -87,7 +85,6 @@ public class DeliveryNoteServiceImplTest {
     }
 
     @Test
-    @DisplayName("Should throw InternalException when blockchain transaction service fails")
     void givenDeliveryNote_whenCertifyDeliveryNote_thenThrowsInternalException() throws Exception {
         // Arrange
         DeliveryNoteCertifyRequestDto note = DeliveryNoteHelper.createDeliveryNoteCertifyRequestDto(BODY_FILE);
@@ -111,7 +108,6 @@ public class DeliveryNoteServiceImplTest {
     }
 
     @Test
-    @DisplayName("Should successfully verify delivery note when hashes match")
     void givenMatchingHashes_whenVerifyDeliveryNote_thenReturnsSuccessMessage() {
         // Arrange
         DeliveryNoteVerifyRequestDto request = new DeliveryNoteVerifyRequestDto(
@@ -141,7 +137,6 @@ public class DeliveryNoteServiceImplTest {
     }
 
     @Test
-    @DisplayName("Should throw HashInvalidException when hashes don't match")
     void givenNonMatchingHashes_whenVerifyDeliveryNote_thenThrowsHashInvalidException() {
         // Arrange
         DeliveryNoteVerifyRequestDto request = new DeliveryNoteVerifyRequestDto(
@@ -167,7 +162,6 @@ public class DeliveryNoteServiceImplTest {
     }
 
     @Test
-    @DisplayName("Should throw InternalException when hash calculation fails")
     void givenHashCalculationError_whenVerifyDeliveryNote_thenThrowsInternalException() {
         // Arrange
         DeliveryNoteVerifyRequestDto request = new DeliveryNoteVerifyRequestDto(
@@ -189,7 +183,6 @@ public class DeliveryNoteServiceImplTest {
     }
 
     @Test
-    @DisplayName("Should throw InternalException when blockchain transaction fails")
     void givenBlockchainError_whenVerifyDeliveryNote_thenThrowsInternalException() {
         // Arrange
         DeliveryNoteVerifyRequestDto request = new DeliveryNoteVerifyRequestDto(
@@ -213,7 +206,6 @@ public class DeliveryNoteServiceImplTest {
     }
 
     @Test
-    @DisplayName("Should handle null request data")
     void givenNullRequestData_whenVerifyDeliveryNote_thenThrowsException() {
         // Arrange
         DeliveryNoteVerifyRequestDto request = new DeliveryNoteVerifyRequestDto(
