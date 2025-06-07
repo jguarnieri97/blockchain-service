@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -35,7 +34,6 @@ public class GoogleWeb3ServiceImplTest {
     private GoogleWeb3ServiceImpl googleWeb3Service;
 
     @Test
-    @DisplayName("Should successfully publish hash to blockchain")
     void givenValidPrivateKeyAndHash_whenPublishHashToBlockchain_thenReturnsTxHash() throws Exception {
         RawTransaction mockTransaction = mock(RawTransaction.class);
         String expectedTxHash = "0x" + TX_HASH;
@@ -53,7 +51,6 @@ public class GoogleWeb3ServiceImplTest {
     }
 
     @Test
-    @DisplayName("Should throw exception when transaction service fails")
     void givenServiceFailure_whenPublishHashToBlockchain_thenThrowsException() throws Exception {
         when(transactionService.buildTransaction(any(Credentials.class), any()))
             .thenThrow(new RuntimeException("Service error"));
@@ -63,7 +60,6 @@ public class GoogleWeb3ServiceImplTest {
     }
 
     @Test
-    @DisplayName("Should successfully get transaction metadata")
     void givenValidTxHash_whenGetTxMetadata_thenReturnsMetadataMap() throws Exception {
         Transaction mockTx = mock(Transaction.class);
         Block mockBlock = mock(Block.class);
@@ -87,7 +83,6 @@ public class GoogleWeb3ServiceImplTest {
     }
 
     @Test
-    @DisplayName("Should throw exception when transaction not found")
     void givenMissingTransaction_whenGetTxMetadata_thenThrowsException() throws Exception {
         when(transactionService.getTransaction(TX_HASH))
             .thenReturn(Optional.empty());
@@ -97,7 +92,6 @@ public class GoogleWeb3ServiceImplTest {
     }
 
     @Test
-    @DisplayName("Should successfully get hash from transaction")
     void givenTransactionWithInputHash_whenGetHashFromTransaction_thenReturnsHashWithoutPrefix() throws Exception {
         Transaction mockTx = mock(Transaction.class);
         String inputHash = HASH;
@@ -112,7 +106,6 @@ public class GoogleWeb3ServiceImplTest {
     }
 
     @Test
-    @DisplayName("Should handle hash without 0x prefix")
     void givenTransactionWithRawHash_whenGetHashFromTransaction_thenReturnsHashAsIs() throws Exception {
         Transaction mockTx = mock(Transaction.class);
         String inputHash = HASH.substring(2);
@@ -127,7 +120,6 @@ public class GoogleWeb3ServiceImplTest {
     }
 
     @Test
-    @DisplayName("Should throw exception when transaction not found in getHashFromTransaction")
     void givenMissingTransaction_whenGetHashFromTransaction_thenThrowsException() throws Exception {
         when(transactionService.getTransaction(TX_HASH))
             .thenReturn(Optional.empty());
@@ -138,7 +130,6 @@ public class GoogleWeb3ServiceImplTest {
     }
 
     @Test
-    @DisplayName("Should throw exception when transaction service fails in getHashFromTransaction")
     void givenServiceFailure_whenGetHashFromTransaction_thenThrowsException() throws Exception {
         when(transactionService.getTransaction(TX_HASH))
             .thenThrow(new RuntimeException("Service error"));

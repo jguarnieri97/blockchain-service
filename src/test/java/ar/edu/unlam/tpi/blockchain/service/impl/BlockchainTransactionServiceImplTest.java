@@ -4,7 +4,6 @@ import java.math.BigInteger;
 import java.util.Map;
 import ar.edu.unlam.tpi.blockchain.dto.response.BlockchainCertResponseDTO;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -35,7 +34,6 @@ public class BlockchainTransactionServiceImplTest {
     }
 
     @Test
-    @DisplayName("Given a transaction with error When sending Then should throw exception")
     void givenTransactionWithError_whenSending_thenShouldThrowException() throws Exception {
         // Given
         RawTransaction tx = RawTransaction.createTransaction(
@@ -58,7 +56,6 @@ public class BlockchainTransactionServiceImplTest {
     }
 
     @Test
-    @DisplayName("Given metadata and hash When building response Then should return blockchain cert")
     void givenMetadataAndHash_whenBuildingResponse_thenShouldReturnBlockchainCert() {
         // Given
         Map<String, Object> metadata = Map.of(
